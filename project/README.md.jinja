@@ -1,0 +1,46 @@
+{% if not (forge_host is defined) -%}
+{% set forge_host = forge_host_custom -%}
+{% endif -%}
+
+<h1 style="text-align: center;">{{ project_name }}</h1>
+
+{% if forge_host == "github.com" -%}
+![Test](https://github.com/{{repository_namespace}}/{{repository_name}}/workflows/Test/badge.svg)
+![Lints](https://github.com/{{repository_namespace}}/{{repository_name}}/workflows/Lints/badge.svg)
+![MSRV](https://github.com/{{repository_namespace}}/{{repository_name}}/workflows/MSRV/badge.svg)
+[![CodeCov](https://codecov.io/gh/{{repository_namespace}}/{{repository_name}}/branch/master/graph/badge.svg)](https://codecov.io/gh/{{repository_namespace}}/{{repository_name}})
+[![Documentation](https://github.com/{{repository_namespace}}/{{repository_name}}/workflows/Documentation/badge.svg)](https://{{repository_namespace}}.github.io/{{repository_name}}/{{repository_name}})
+{% endif -%}
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm.fming.dev)
+
+{{ project_description }}
+
+## Requirements
+
+{{ project_name }} requires Python {{ python_package_requires_python }}
+
+## Installation
+
+### From source
+
+```bash
+git clone https://{{forge_host}}/{{repository_namespace}}/{{repository_name}}.git
+cd {{repository_name}}
+pip install --user .
+```
+{% if (python_package_distribution_name is defined) -%}
+### From Pypi
+
+It is recommended to install with `pipx`, if `pipx` haven't been installed yet, refer to the [pipx's docs](https://github.com/pipxproject/pipx)
+
+```bash
+$ pipx install {{ python_package_distribution_name }}
+```
+
+Alternatively, install with `pip` to the user site:
+
+```bash
+$ python -m pip install --user {{ python_package_distribution_name }}
+```
+{% endif -%}
